@@ -7,11 +7,6 @@
  * http://benalman.com/about/license/
  */
 
-// JUST SOME STUFF MAYBE FOR BBQ MAYBE NOT
-// WORK IN PROGRESS DONT USE YET KTHX
-// NOT EVEN USING JQUERY YET MAYBE IT NEVER WILL
-// I LOVE COOKIES
-
 function getRoute(route, url) {
   // Param names, in order
   var paramNames = [];

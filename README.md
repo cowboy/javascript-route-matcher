@@ -8,7 +8,7 @@ routeMatcher("search/:query/p:page", "search/boston/p20") // {query: "boston", p
 
 // Or you can use routeMatcher to create a reusable route matching function.
 var matchRoute = routeMatcher("search/:query/p:page");
-matchRoute("search/gonna-fail") // null
+matchRoute("search/gonna-fail") // null (no match)
 matchRoute("search/cowboy/p5")  // {query: "cowboy", page: "5"}
 matchRoute("search/gnarf/p10")  // {query: "gnarf", page: "10"}
 

@@ -86,3 +86,50 @@ test("a few backbone.js test routes", function() {
   r = routeMatcher("*anything");
   same(r.match("doesnt-match-a-route"), {anything: "doesnt-match-a-route"}, "should match");
 });
+
+module("#build");
+
+test("one variable", function() {
+  var r = routeMatcher("users/:id");
+  same(r.build({id: "123"}), "users/123", "should build");
+  same(r.build({id: ""}), "users/", "should build");
+  same(r.build({}), "users/", "omitted params default to empty string");
+  same(r.build(), "users/", "omitted argument default to behave like empty object passed");
+});
+
+test("multiple variables", function() {
+  var r = routeMatcher("users/:id/:other");
+  same(r.build({id: "123", other: "456"}), "users/123/456", "should build");
+  same(r.build({id: "", other: "456"}), "users//456", "should build");
+  same(r.build({id: "123", other: ""}), "users/123/", "should build");
+  same(r.build({id: "", other: ""}), "users//", "should build");
+  same(r.build({id: "123"}), "users/123/", "omitted params default to empty string");
+  same(r.build({other: "456"}), "users//456", "omitted params default to empty string");
+  same(r.build({}), "users//", "omitted params default to empty string");
+  same(r.build(), "users//", "omitted params default to empty string");
+});
+
+test("one splat", function() {
+  var r = routeMatcher("users/*stuff");
+  same(r.build({stuff: ""}), "users/", "should build");
+  same(r.build({stuff: "123"}), "users/123", "should build");
+  same(r.build({stuff: "123/456"}), "users/123/456", "should build");
+  same(r.build({}), "users/", "omitted params default to empty string");
+  same(r.build(), "users/", "omitted params default to empty string");
+});
+
+test("multiple splats", function() {
+  var r = routeMatcher("users/*stuff/*more");
+  same(r.build({stuff: "123", more: "456"}), "users/123/456", "should build");
+  same(r.build({stuff: "123", more: ""}), "users/123/", "should build");
+  same(r.build({stuff: "", more: "123"}), "users//123", "should build");
+  same(r.build({stuff: "", more: ""}), "users//", "should build");
+  same(r.build({}), "users//", "omitted params default to empty string");
+  same(r.build(), "users//", "omitted params default to empty string");
+});
+
+test("possibly conflicting param names", function() {
+  var r = routeMatcher(":a/:aa/*aaa/*aaaa");
+  same(r.build({a: 1, aa: 2, aaa: 3, aaaa: 4}), "1/2/3/4", "should build");
+  same(r.build({aaaa: 4, aaa: 3, aa: 2, a: 1}), "1/2/3/4", "should build");
+});

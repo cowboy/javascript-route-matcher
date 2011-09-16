@@ -15,10 +15,10 @@
   var reParam = /([:*])(\w+)/g;
 
   global.routeMatcher = function(route, url) {
+    // Object to be returned. The public API.
+    var self = {};
     // Matched param or splat names, in order
     var names = [];
-    // The route parsing function to be returned / invoked.
-    var fn;
 
     // Build route RegExp from passed string.
     if (typeof route === "string") {
@@ -34,7 +34,7 @@
       // Add ^/$ anchors and create the actual RegExp.
       route = new RegExp("^" + route + "$");
 
-      fn = function(url) {
+      self.match = function(url) {
         var i = 0;
         var params = {};
         var matches = url.match(route);
@@ -48,13 +48,13 @@
       };
     } else {
       // RegExp route was passed. This is super-simple.
-      fn = function(url) {
+      self.match = function(url) {
         return url.match(route);
       };
     }
     // If a url was passed, return params or matches, otherwise return the
     // route-matching function.
-    return url == null ? fn : fn(url);
+    return url == null ? self : self.match(url);
   };
 
 }(this.exports || this));

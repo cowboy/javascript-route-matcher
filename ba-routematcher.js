@@ -13,7 +13,7 @@
   // Match :xxx or *xxx param placeholders.
   var reParam = /([:*])(\w+)/g;
 
-  global.getRoute = function(route, url) {
+  global.routeMatcher = function(route, url) {
     // Param names, in order
     var names = [];
     // The route parsing function to be returned (or invoked if a url was

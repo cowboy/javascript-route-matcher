@@ -22,7 +22,7 @@ matchRoute("user/123..456")     // ["user/123..456", "123", "456"]
 ```
 
 ## Documentation
-Look at the [unit tests](unit/ba-routematcher.js).
+Look at the unit tests.
 
 ## Release History
 Nothing official yet...

@@ -8,31 +8,30 @@
  */
 
 (function(global) {
-  // Characters to be escaped with \.
-  var reEscape = /[-[\]{}()+?.,\\^$|#\s]/g;
-  // Match :xxx or *xxx param placeholders.
+  // Characters to be escaped with \. RegExp borrowed from the Backbone router
+  // but escaped (note: unnecessarily) to keep JSHint from complaining.
+  var reEscape = /[\-\[\]{}()+?.,\\\^$|#\s]/g;
+  // Match :param or *splat placeholders.
   var reParam = /([:*])(\w+)/g;
 
   global.routeMatcher = function(route, url) {
-    // Param names, in order
+    // Matched param or splat names, in order
     var names = [];
-    // The route parsing function to be returned (or invoked if a url was
-    // passed).
+    // The route parsing function to be returned / invoked.
     var fn;
 
+    // Build route RegExp from passed string.
     if (typeof route === "string") {
-      // Build route RegExp from passed string, replacing any :param or *splat
-      // with an appropriate capture group.
+      // Escape special chars.
       route = route.replace(reEscape, "\\$&");
+      // Replace any :param or *splat with the appropriate capture group.
       route = route.replace(reParam, function(_, mode, name) {
         names.push(name);
-        // :param captures until the next /, while *splat captures until the
-        // next :param, *splat, or EOL.
+        // :param should capture until the next / or EOL, while *splat should
+        // capture until the next :param, *splat, or EOL.
         return mode === ":" ? "([^/]*)" : "(.*)";
       });
-
-      // Add ^/$ anchors and escape as-necessary. RegExp borrowed from the
-      // Backbone.js router.
+      // Add ^/$ anchors and create the actual RegExp.
       route = new RegExp("^" + route + "$");
 
       fn = function(url) {
@@ -41,7 +40,7 @@
         var matches = url.match(route);
         // If no matches, return null.
         if (!matches) { return null; }
-        // Add all :params / * wildcards values into the params object.
+        // Add all matched :param / *splat values into the params object.
         while(i < names.length) {
           params[names[i++]] = matches[i];
         }
@@ -55,6 +54,7 @@
     }
     // If a url was passed, return params or matches, otherwise return the
     // route-matching function.
-    return url == null ? fn : fn(url);  };
+    return url == null ? fn : fn(url);
+  };
 
 }(this.exports || this));

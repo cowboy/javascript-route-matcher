@@ -24,15 +24,18 @@ user.parse("user/foo/")     // null (no match)
 user.parse("user/123/")     // {id: "123", other: ""}
 user.parse("user/123/foo")  // {id: "123", other: "foo"}
 
-// You can pass in a RegExp route as well, which returns an array of matches or
-// null if no match. Note that for RegExp routes, the .stringify method always
-// returns empty string, because stringification isn't supported.
-r = routeMatcher(/^users?(?:\/(\d+)(?:\.\.(\d+))?)?/);
-r("gonna-fail")     // null (no match)
-r("user")           // ["user", undefined, undefined]
-r("users")          // ["users", undefined, undefined]
-r("user/123")       // ["user/123", "123", undefined]
-r("user/123..456")  // ["user/123..456", "123", "456"]
+// Note that .stringify doesn't perform any validation. Should it?
+user.stringify({id: "abc", other: "xyz"}) // "user/abc/xyz"
+
+// You can pass in a RegExp route, which returns an object with a `captures`
+// property, or null if no match. Note that for RegExp routes, the .stringify
+// method always returns empty string, because stringification isn't supported.
+var users = routeMatcher(/^(users?)(?:\/(\d+)(?:\.\.(\d+))?)?/);
+users.parse("gonna-fail")     // null (no match)
+users.parse("user")           // {captures: ["user", undefined, undefined]}
+users.parse("users")          // {captures: ["users", undefined, undefined]}
+users.parse("user/123")       // {captures: ["user", "123", undefined]}
+users.parse("user/123..456")  // {captures: ["user", "123", "456"]}
 ```
 
 ## Documentation

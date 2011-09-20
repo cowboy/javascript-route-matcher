@@ -85,9 +85,10 @@
     } else {
       // RegExp route was passed. This is super-simple.
       self.parse = function(url) {
-        return url.match(re);
+        var matches = url.match(re);
+        return matches && {captures: matches.slice(1)};
       };
-      // There's no meaningful way to stringify based on a passed RegExp, so
+      // There's no meaningful way to stringify based on a RegExp route, so
       // return empty string.
       self.stringify = function() { return ""; };
     }

@@ -1,11 +1,12 @@
 module("#parse");
 
 test("regex route", function() {
-  var r = routeMatcher(/^users?(?:\/(\d+)(?:\.\.(\d+))?)?/);
+  var r = routeMatcher(/^(users?)(?:\/(\d+)(?:\.\.(\d+))?)?/);
   same(r.parse("foo"), null, "shouldn't match");
-  same(r.parse("user"), ["user", undefined, undefined], "should match");
-  same(r.parse("user/123"), ["user/123", "123", undefined], "should match");
-  same(r.parse("user/123..456"), ["user/123..456", "123", "456"], "should match");
+  same(r.parse("user"), {captures: ["user", undefined, undefined]}, "should match");
+  same(r.parse("users"), {captures: ["users", undefined, undefined]}, "should match");
+  same(r.parse("user/123"), {captures: ["user", "123", undefined]}, "should match");
+  same(r.parse("user/123..456"), {captures: ["user", "123", "456"]}, "should match");
 });
 
 test("string route, basic", function() {
@@ -108,7 +109,7 @@ test("specific matching rules", function() {
 module("#stringify");
 
 test("regex route", function() {
-  var r = routeMatcher(/^users?(?:\/(\d+)(?:\.\.(\d+))?)?/);
+  var r = routeMatcher(/^(users?)(?:\/(\d+)(?:\.\.(\d+))?)?/);
   same(r.stringify("anything"), "", "always returns empty string if RegExp route");
 });
 

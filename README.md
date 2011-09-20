@@ -8,15 +8,16 @@ routeMatcher("search/:query/p:page", "search/boston/p20") // {query: "boston", p
 
 // Or you can use routeMatcher to create a reusable route matching function.
 var r = routeMatcher("search/:query/p:page");
-r.match("search/gonna-fail") // null (no match)
-r.match("search/cowboy/p5")  // {query: "cowboy", page: "5"}
-r.match("search/gnarf/p10")  // {query: "gnarf", page: "10"}
+r.parse("search/gonna-fail") // null (no match)
+r.parse("search/cowboy/p5")  // {query: "cowboy", page: "5"}
+r.parse("search/gnarf/p10")  // {query: "gnarf", page: "10"}
 
-// But wait, it goes both ways! (Note that .build only works for string routes,
-// not RegExp routes)
-r.build({query: "bonus", page: "6"}) // "search/bonus/p6"
+// But wait, it goes both ways!
+r.stringify({query: "bonus", page: "6"}) // "search/bonus/p6"
 
-// You can pass in a RegExp route as well.
+// You can pass in a RegExp route as well, which returns an array of matches or
+// null if no match. Note that for RegExp routes, the .stringify method always
+// returns empty string, because stringification isn't supported.
 r = routeMatcher(/^users?(?:\/(\d+)(?:\.\.(\d+))?)?/);
 r("gonna-fail")        // null (no match)
 r("user")              // ["user", undefined, undefined]

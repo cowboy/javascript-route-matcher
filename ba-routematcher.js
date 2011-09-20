@@ -1,5 +1,5 @@
 /*!
- * JavaScript Basic Route Matcher - v0.1pre - 9/16/2011
+ * JavaScript Basic Route Matcher - v0.1pre - 9/20/2011
  * http://benalman.com/
  *
  * Copyright (c) 2011 "Cowboy" Ben Alman
@@ -38,7 +38,7 @@
 
       // Match the passed url against the route, returning an object of params
       // and values.
-      self.match = function(url) {
+      self.parse = function(url) {
         var i = 0;
         var params = {};
         var matches = url.match(re);
@@ -52,7 +52,7 @@
       };
 
       // Build path by inserting the given params into the route.
-      self.build = function(params) {
+      self.stringify = function(params) {
         var param, re;
         var result = route;
         // Insert each passed param into the route string.
@@ -65,13 +65,16 @@
       };
     } else {
       // RegExp route was passed. This is super-simple.
-      self.match = function(url) {
+      self.parse = function(url) {
         return url.match(re);
       };
+      // There's no meaningful way to stringify based on a passed RegExp, so
+      // return empty string.
+      self.stringify = function() { return ""; };
     }
     // If a url was passed, return params or matches, otherwise return the
     // route-matching function.
-    return url == null ? self : self.match(url);
+    return url == null ? self : self.parse(url);
   };
 
 }(this.exports || this));

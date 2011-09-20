@@ -14,7 +14,21 @@
   // Match named :param or *splat placeholders.
   var reParam = /([:*])(\w+)/g;
 
-  global.routeMatcher = function(route, url) {
+  // Test to see if a value matches the corresponding rule.
+  function validateRule(rule, value) {
+    // For a given rule, get the first letter of the string name of its
+    // constructor function. "R" -> RegExp, "F" -> Function (these shouldn't
+    // conflict with any other types one might specify).
+    var type = Object.prototype.toString.call(rule).charAt(8);
+    // If regexp, match. If function, invoke. Otherwise, compare. Note that ==
+    // is used because type coercion is needed, as `value` will always be a
+    // string, but `rule` might not.
+    return type === "R" ? rule.test(value) : type === "F" ? rule(value) : rule == value;
+  }
+
+  // Pass in a route string (or RegExp) plus an optional map of rules, and get
+  // back an object with .parse and .stringify methods.
+  global.routeMatcher = function(route, rules) {
     // Object to be returned. The public API.
     var self = {};
     // Matched param or splat names, in order
@@ -40,13 +54,18 @@
       // and values.
       self.parse = function(url) {
         var i = 0;
+        var param, value;
         var params = {};
         var matches = url.match(re);
         // If no matches, return null.
         if (!matches) { return null; }
         // Add all matched :param / *splat values into the params object.
         while(i < names.length) {
-          params[names[i++]] = matches[i];
+          param = names[i++];
+          value = matches[i];
+          // If a rule exists for thie param and it doesn't validate, return null.
+          if (rules && param in rules && !validateRule(rules[param], value)) { return null; }
+          params[param] = value;
         }
         return params;
       };
@@ -72,9 +91,7 @@
       // return empty string.
       self.stringify = function() { return ""; };
     }
-    // If a url was passed, return params or matches, otherwise return the
-    // route-matching function.
-    return url == null ? self : self.parse(url);
+    return self;
   };
 
 }(this.exports || this));

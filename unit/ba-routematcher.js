@@ -1,16 +1,3 @@
-module("basics");
-
-test("called with url", function() {
-  same(routeMatcher("users", "foo"), null, "shouldn't match");
-  same(routeMatcher("users", "users"), {}, "should match");
-});
-
-test("called without url", function() {
-  var r = routeMatcher("users");
-  same(r.parse("foo"), null, "shouldn't match");
-  same(r.parse("users"), {}, "should match");
-});
-
 module("#parse");
 
 test("regex route", function() {
@@ -85,6 +72,37 @@ test("a few backbone.js test routes", function() {
 
   r = routeMatcher("*anything");
   same(r.parse("doesnt-match-a-route"), {anything: "doesnt-match-a-route"}, "should match");
+});
+
+test("specific matching rules", function() {
+  var digitsOnlyFn = function(value) { return value.match(/^\d+$/); };
+  var digitsOnlyRe = /^\d+$/;
+  
+  var r = routeMatcher("users/:id", {id: digitsOnlyRe});
+  same(r.parse("users"), null, "shouldn't match");
+  same(r.parse("users/"), null, "shouldn't match");
+  same(r.parse("users/abc"), null, "shouldn't match");
+  same(r.parse("users/123.456"), null, "shouldn't match");
+  same(r.parse("users/123"), {id: "123"}, "should match");
+
+  r = routeMatcher("users/:id", {id: digitsOnlyFn});
+  same(r.parse("users/abc"), null, "shouldn't match");
+  same(r.parse("users/123.456"), null, "shouldn't match");
+  same(r.parse("users/123"), {id: "123"}, "should match");
+
+  r = routeMatcher("users/:id", {id: 456});
+  same(r.parse("users/123"), null, "shouldn't match");
+  same(r.parse("users/456"), {id: "456"}, "should match");
+
+  r = routeMatcher("users/:id", {id: "abc123"});
+  same(r.parse("users/abc"), null, "shouldn't match");
+  same(r.parse("users/abc123"), {id: "abc123"}, "should match");
+
+  r = routeMatcher("users/:id/:other", {id: digitsOnlyRe, other: digitsOnlyFn});
+  same(r.parse("users/abc/def"), null, "shouldn't match");
+  same(r.parse("users/abc/123"), null, "shouldn't match");
+  same(r.parse("users/123/abc"), null, "shouldn't match");
+  same(r.parse("users/123/456"), {id: "123", other: "456"}, "should match");
 });
 
 module("#stringify");

@@ -74,7 +74,9 @@
       self.stringify = function(params) {
         var param, re;
         var result = route;
-        // Insert each passed param into the route string.
+        // Insert each passed param into the route string. Note that this loop
+        // doesn't check .hasOwnProperty because this script doesn't support
+        // modifications to Object.prototype.
         for (param in params) {
           re = new RegExp("[:*]" + param + "\\b");
           result = result.replace(re, params[param]);

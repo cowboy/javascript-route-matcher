@@ -60,7 +60,7 @@
         // If no matches, return null.
         if (!matches) { return null; }
         // Add all matched :param / *splat values into the params object.
-        while(i < names.length) {
+        while (i < names.length) {
           param = names[i++];
           value = matches[i];
           // If a rule exists for thie param and it doesn't validate, return null.

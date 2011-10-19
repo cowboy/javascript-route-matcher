@@ -1,0 +1,4 @@
+/* JavaScript Route Matcher - v0.1.0 - 10/19/2011
+ * http://github.com/cowboy/javascript-route-matcher
+ * Copyright (c) 2011 "Cowboy" Ben Alman; Licensed MIT, GPL */
+(function(a){function d(b,c){var d=a.toString.call(b).charAt(8);return d==="R"?b.test(c):d==="F"?b(c):b==c}var b=/[\-\[\]{}()+?.,\\\^$|#\s]/g,c=/([:*])(\w+)/g;a.routeMatcher=function(a,e){var f={},g=[],h=a;return typeof a=="string"?(h=h.replace(b,"\\$&"),h=h.replace(c,function(a,b,c){return g.push(c),b===":"?"([^/]*)":"(.*)"}),h=new RegExp("^"+h+"$"),f.parse=function(a){var b=0,c,f,i={},j=a.match(h);if(!j)return null;while(b<g.length){c=g[b++],f=j[b];if(e&&c in e&&!d(e[c],f))return null;i[c]=f}return i},f.stringify=function(b){var d,e,f=a;for(d in b)e=new RegExp("[:*]"+d+"\\b"),f=f.replace(e,b[d]);return f.replace(c,"")}):(f.parse=function(a){var b=a.match(h);return b&&{captures:b.slice(1)}},f.stringify=function(){return""}),f}})(typeof exports=="object"&&exports||this)

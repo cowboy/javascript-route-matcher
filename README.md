@@ -72,6 +72,11 @@ users.parse("user/123..456")  // {captures: ["user", "123", "456"]}
 ## Documentation
 For now, look at the unit tests.
 
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/node-grunt).
+
+_Also, please don't edit files in the "dist" subdirectory as they are generated via grunt. You'll find source code in the "lib" subdirectory!_
+
 ## Release History
 Nothing official yet...
 

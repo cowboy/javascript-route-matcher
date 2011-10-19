@@ -18,8 +18,11 @@
   function validateRule(rule, value) {
     // For a given rule, get the first letter of the string name of its
     // constructor function. "R" -> RegExp, "F" -> Function (these shouldn't
-    // conflict with any other types one might specify).
-    var type = Object.prototype.toString.call(rule).charAt(8);
+    // conflict with any other types one might specify). Note: instead of
+    // getting .toString from a new object {} or Object.prototype, I'm assuming
+    // that exports will always be an object, and using its .toString method.
+    // Bad idea? Let me know by filing an issue!
+    var type = exports.toString.call(rule).charAt(8);
     // If regexp, match. If function, invoke. Otherwise, compare. Note that ==
     // is used because type coercion is needed, as `value` will always be a
     // string, but `rule` might not.

@@ -1,5 +1,5 @@
-/*!
- * JavaScript Basic Route Matcher - v0.1pre - 9/20/2011
+/*
+ * JavaScript Route Matcher
  * http://benalman.com/
  *
  * Copyright (c) 2011 "Cowboy" Ben Alman
@@ -7,7 +7,7 @@
  * http://benalman.com/about/license/
  */
 
-(function(global) {
+(function(exports) {
   // Characters to be escaped with \. RegExp borrowed from the Backbone router
   // but escaped (note: unnecessarily) to keep JSHint from complaining.
   var reEscape = /[\-\[\]{}()+?.,\\\^$|#\s]/g;
@@ -28,7 +28,7 @@
 
   // Pass in a route string (or RegExp) plus an optional map of rules, and get
   // back an object with .parse and .stringify methods.
-  global.routeMatcher = function(route, rules) {
+  exports.routeMatcher = function(route, rules) {
     // Object to be returned. The public API.
     var self = {};
     // Matched param or splat names, in order
@@ -97,4 +97,4 @@
     return self;
   };
 
-}(this.exports || this));
+}(typeof exports === "object" && exports || this));

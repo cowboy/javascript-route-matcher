@@ -1,5 +1,36 @@
 # JavaScript Basic Route Matcher
+
 A simple route matching / url building utility. Intended to be included as part of a larger routing library.
+
+## Getting Started
+
+This code should work just fine in Node.js:
+
+```javascript
+var routeMatcher = require('ba-routematcher').routeMatcher;
+var myRoute = routeMatcher("user/:id");
+```
+
+Or in the browser:
+
+```html
+<script src="ba-routematcher.js"></script>
+<script>
+var myRoute = routeMatcher("user/:id");
+</script>
+```
+
+In the browser, you can attach routeMatcher to any object.
+
+```html
+<script>
+this.exports = Bocoup.utils;
+</script>
+<script src="ba-routematcher.js"></script>
+<script>
+var myRoute = Bocoup.utils.routeMatcher("user/:id");
+</script>
+```
 
 ## Sample Usage
 ```javascript
@@ -39,7 +70,7 @@ users.parse("user/123..456")  // {captures: ["user", "123", "456"]}
 ```
 
 ## Documentation
-Look at the unit tests.
+For now, look at the unit tests.
 
 ## Release History
 Nothing official yet...

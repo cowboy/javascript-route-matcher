@@ -7,14 +7,14 @@ A simple route matching / url building utility. Intended to be included as part 
 This code should work just fine in Node.js:
 
 ```javascript
-var routeMatcher = require('ba-routematcher').routeMatcher;
+var routeMatcher = require('lib/routematcher').routeMatcher;
 var myRoute = routeMatcher("user/:id");
 ```
 
 Or in the browser:
 
 ```html
-<script src="ba-routematcher.js"></script>
+<script src="dist/ba-routematcher.min.js"></script>
 <script>
 var myRoute = routeMatcher("user/:id");
 </script>
@@ -26,7 +26,7 @@ In the browser, you can attach routeMatcher to any object.
 <script>
 this.exports = Bocoup.utils;
 </script>
-<script src="ba-routematcher.js"></script>
+<script src="dist/ba-routematcher.min.js"></script>
 <script>
 var myRoute = Bocoup.utils.routeMatcher("user/:id");
 </script>

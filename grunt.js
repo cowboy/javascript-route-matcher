@@ -14,15 +14,17 @@ config.init({
             ' * {{meta.homepage}}\n' + 
             ' * {{{meta.copyright}}}; Licensed {{join meta.license}} */'
   },
-  concat: {},
+  concat: {
+    'dist/ba-routematcher.js': ['<banner>', '<file_strip_banner:lib/routematcher.js>']
+  },
   min: {
-    'ba-routematcher.min.js': ['<banner>', 'ba-routematcher.js']
+    'dist/ba-routematcher.min.js': ['<banner>', 'dist/ba-routematcher.js']
   },
   test: {
     files: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'ba-routematcher.js', 'test/**/*.js']
+    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
   },
   jshint: {
     options: {
@@ -44,4 +46,4 @@ config.init({
 });
 
 // Default task.
-task.registerTask('default', 'lint:files test:files min');
+task.registerTask('default', 'lint:files test:files concat min');

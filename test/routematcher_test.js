@@ -1,5 +1,5 @@
-/*global require:true*/
-var routeMatcher = require('../ba-routematcher').routeMatcher;
+/*global require:true */
+var routeMatcher = require('../lib/routematcher').routeMatcher;
 
 exports.parse = {
   "regex route": function(test) {

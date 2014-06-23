@@ -4,10 +4,10 @@ A simple route matching / url building utility. Intended to be included as part 
 
 ## Getting Started
 
-This code should work just fine in Node.js:
+In Node.js, run `npm install route-matcher` and then use this code:
 
 ```javascript
-var routeMatcher = require('lib/routematcher').routeMatcher;
+var routeMatcher = require("route-matcher").routeMatcher;
 var myRoute = routeMatcher("user/:id");
 ```
 

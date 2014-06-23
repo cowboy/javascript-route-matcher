@@ -1,5 +1,5 @@
 {
-  "name": "javascript-route-matcher",
+  "name": "route-matcher",
   "version": "0.1.0",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "description": "A simple route matching / url building utility. Intended to be included as part of a larger routing library.",

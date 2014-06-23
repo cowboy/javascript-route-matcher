@@ -1,0 +1,33 @@
+{
+  "name": "javascript-route-matcher",
+  "version": "0.1.0",
+  "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
+  "description": "A simple route matching / url building utility. Intended to be included as part of a larger routing library.",
+  "main": "dist/ba-routematcher.js",
+  "directories": {
+    "dist": "dist",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "grunt",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cowboy/javascript-route-matcher.git"
+  },
+  "keywords": [
+    "uri",
+    "url",
+    "routes"
+  ],
+  "bugs": {
+    "url": "https://github.com/cowboy/javascript-route-matcher/issues"
+  },
+  "license": "MIT/GPLv2",
+  "homepage": "https://github.com/cowboy/javascript-route-matcher",
+  "devDependencies": {
+    "grunt": "^0.1.2"
+  }
+}

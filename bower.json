@@ -1,0 +1,11 @@
+{
+  "name": "javascript-route-matcher",
+  "version": "0.1.1",
+  "main": "dist/ba-routematcher.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test"
+  ]
+}

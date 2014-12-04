@@ -1,0 +1,11 @@
+{
+  "name": "test-bower-javascript-route-matcher",
+  "version": "0.1.0",
+  "main": "dist/ba-routematcher.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test"
+  ]
+}
